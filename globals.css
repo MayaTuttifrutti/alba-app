@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens, copied from the Figma file "Alba / Design System".
+ * Primitives (Figma collection "Primitives") -> semantic tokens (Figma collection "Color").
+ * Only the light theme exists.
+ */
+@theme {
+  /* Primitives */
+  --color-ink-900: #141b2d;
+  --color-ink-700: #2a3550;
+  --color-ink-500: #5b6682;
+  --color-ink-300: #a9b0c2;
+  --color-ink-100: #e6e8ef;
+  --color-ink-50: #f4f5f8;
+  --color-dawn-600: #d9822b;
+  --color-dawn-500: #f5a35c;
+  --color-dawn-300: #f9c998;
+  --color-dawn-100: #fdebd6;
+  --color-sage-700: #256354;
+  --color-sage-600: #2f7d6b;
+  --color-sage-500: #3e9a85;
+  --color-sage-100: #ddf0ea;
+  --color-coral-600: #c8553d;
+  --color-coral-100: #fbe3dd;
+  --color-cream-50: #fbf8f3;
+
+  /* Semantic: backgrounds */
+  --color-app: #fbf8f3; /* color/bg/app */
+  --color-surface: #ffffff; /* color/bg/surface */
+  --color-muted: #f4f5f8; /* color/bg/muted */
+  --color-brand: #141b2d; /* color/bg/brand */
+  --color-safe-bg: #ddf0ea; /* color/bg/safe */
+  --color-warn-bg: #fdebd6; /* color/bg/warn */
+  --color-risk-bg: #fbe3dd; /* color/bg/risk */
+
+  /* Semantic: text */
+  --color-fg: #141b2d; /* color/text/primary */
+  --color-fg-2: #5b6682; /* color/text/secondary */
+  --color-fg-inverse: #ffffff; /* color/text/inverse */
+  --color-safe-fg: #2f7d6b; /* color/text/safe */
+  --color-warn-fg: #d9822b; /* color/text/warn */
+  --color-risk-fg: #c8553d; /* color/text/risk */
+
+  /* Semantic: lines and actions */
+  --color-line: #e6e8ef; /* color/border/default */
+  --color-action: #141b2d; /* color/action/primary */
+  --color-accent: #f5a35c; /* color/action/accent */
+  --color-accent-safe: #3e9a85; /* color/accent/safe */
+  --color-accent-soft: #f9c998; /* color/accent/dawn-soft */
+
+  /* Radius (Figma collection "Radius") */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Type styles (Figma text styles) */
+@utility t-num {
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+@utility t-h1 {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+@utility t-h2 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+}
+@utility t-h3 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+@utility t-body-l {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+@utility t-body-m {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+@utility t-label {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+}
+@utility t-caption {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+@utility t-overline {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html,
+body {
+  height: 100%;
+  background: #eceae4;
+  color: var(--color-fg);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Screen transitions */
+@keyframes alba-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes alba-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.alba-screen {
+  animation: alba-fade-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.alba-pop {
+  animation: alba-pop-in 420ms cubic-bezier(0.2, 0.9, 0.25, 1.05) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alba-screen,
+  .alba-pop {
+    animation: none;
+  }
+  * {
+    transition: none !important;
+  }
+}
