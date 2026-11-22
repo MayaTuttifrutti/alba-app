@@ -10,7 +10,7 @@ The principle behind the product: **Alba proposes, the user decides.** Nothing h
 
 - **Live app:** add your Vercel URL here after deploying.
 - **Figma prototype:** add the prototype link here.
-- Deep links for the portfolio: `/?start=home` opens Home, `/?start=alert` opens Home with the Survival Mode alert.
+- Deep links for the portfolio: `/?start=home` opens Home, `/?start=alert` opens Home with the Survival Mode alert, `/?start=reserve` opens the Tax Guard flow.
 
 Suggested path for a first visit: *Get started → Connect securely → tap the runway card → See options → Apply 2 actions → Back to home → explore the tab bar.*
 
@@ -25,6 +25,7 @@ Suggested path for a first visit: *Get started → Connect securely → tap the 
 | Safety | Safety buffer, Survival Mode switch, recent reversible actions |
 | Advisor | Chat for questions such as "Can I afford this laptop?" (prepared replies) |
 | AI Survival Mode | Alert → Choice (three reversible actions) → Recovery (runway 9 → 21 days) |
+| Tax Guard flow | Reserve locked → Tax reserve (payment breakdown, €960 set aside) → Ask Alba |
 
 ## Stack
 

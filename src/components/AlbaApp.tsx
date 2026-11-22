@@ -18,7 +18,9 @@ import { ConnectScreen } from "@/screens/Connect";
 import { HomeScreen } from "@/screens/Home";
 import { IncomeScreen } from "@/screens/Income";
 import { RecoveryScreen } from "@/screens/Recovery";
+import { ReserveLockedScreen } from "@/screens/ReserveLocked";
 import { SafetyScreen } from "@/screens/Safety";
+import { TaxReserveScreen } from "@/screens/TaxReserve";
 import { TaxesScreen } from "@/screens/Taxes";
 import { WelcomeScreen } from "@/screens/Welcome";
 
@@ -30,7 +32,7 @@ const TAB_SCREENS: ScreenId[] = ["home", "income", "taxes", "safety", "advisor"]
  *  - `runway`     days of safety, 47 healthy -> 9 after the simulated dip -> N after applying actions
  *  - `alertOpen`  the Survival Mode banner over Home
  *  - `selected`   actions ticked on the Choice screen
- * Deep links for the portfolio: /?start=home and /?start=alert.
+ * Deep links for the portfolio: /?start=home, /?start=alert and /?start=reserve (Tax Guard flow).
  */
 export function AlbaApp() {
   const [stack, setStack] = useState<ScreenId[]>(["welcome"]);
@@ -42,6 +44,8 @@ export function AlbaApp() {
 
   const screen = stack[stack.length - 1];
   const activeTab = TAB_SCREENS.includes(screen) ? (screen as TabId) : null;
+  /** The Tax reserve screen has a dark header that also covers the status bar. */
+  const darkTop = screen === "reserve-detail";
 
   const push = (s: ScreenId) => setStack((st) => [...st, s]);
   const replace = (s: ScreenId) => setStack([s]);
@@ -63,6 +67,8 @@ export function AlbaApp() {
       replace("home");
       setRunway(RUNWAY_AT_RISK);
       setAlertOpen(true);
+    } else if (start === "reserve") {
+      setStack(["home", "reserve"]);
     }
   }, []);
 
@@ -96,7 +102,11 @@ export function AlbaApp() {
       case "connect":
         return <ConnectScreen onBack={back} onConnect={() => replace("home")} onSkip={() => replace("home")} />;
       case "home":
-        return <HomeScreen runway={runway} onRunwayTap={() => startDip(false)} onTaxGuard={() => replace("taxes")} />;
+        return <HomeScreen runway={runway} onRunwayTap={() => startDip(false)} onTaxGuard={() => push("reserve")} />;
+      case "reserve":
+        return <ReserveLockedScreen onBack={back} onDetails={() => push("reserve-detail")} />;
+      case "reserve-detail":
+        return <TaxReserveScreen onBack={back} onAsk={() => replace("advisor")} />;
       case "income":
         return <IncomeScreen />;
       case "taxes":
@@ -126,8 +136,12 @@ export function AlbaApp() {
   return (
     <PhoneFrame>
       <div className="relative flex h-full flex-col bg-app">
-        <div className="hidden h-[54px] flex-none px-6 pt-[18px] t-label sm:block">9:41</div>
-        <div className="h-[env(safe-area-inset-top)] flex-none sm:hidden" />
+        <div
+          className={`hidden h-[54px] flex-none px-6 pt-[18px] t-label sm:block ${darkTop ? "bg-brand text-fg-inverse" : ""}`}
+        >
+          9:41
+        </div>
+        <div className={`h-[env(safe-area-inset-top)] flex-none sm:hidden ${darkTop ? "bg-brand" : ""}`} />
 
         <main key={screen} className="min-h-0 flex-1">
           {renderScreen()}

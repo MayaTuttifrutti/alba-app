@@ -121,10 +121,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-button {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
+/* Must live in @layer base: unlayered rules would override Tailwind utilities (text color, font size) on buttons. */
+@layer base {
+  button {
+    cursor: pointer;
+  }
 }
 
 /* Screen transitions */

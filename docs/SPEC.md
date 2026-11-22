@@ -53,7 +53,7 @@ Five pillars, shown as the tab bar:
 | Safety | `safety` | Safety buffer, Survival Mode switch, recent actions |
 | Advisor | `advisor` | Conversational interface |
 
-Outside the tab bar: `welcome`, `connect` (onboarding), `choice`, `recovery` (Survival Mode).
+Outside the tab bar: `welcome`, `connect` (onboarding), `choice`, `recovery` (Survival Mode), `reserve`, `reserve-detail` (Tax Guard flow).
 
 ## 5. Flow and state
 
@@ -76,6 +76,9 @@ alert ──See options──► choice ──Apply──► recovery ──Back
   │                       ├──Do nothing for now──► home
   └──Not now / scrim──► home (runway stays 9, status "At risk")
 choice ──Back──► alert
+
+home ──Tax Guard card──► reserve ──View allocation details──► reserve-detail ──Ask Alba about this──► advisor
+reserve ──Back──► home      reserve-detail ──Back──► reserve      "View tax reserve" scrolls to the breakdown
 ```
 
 Rules:
@@ -96,6 +99,8 @@ Rules:
 | Alert | `screens/AlertOverlay.tsx` | Dialog with scrim; "Not now" and scrim both dismiss |
 | Choice | `screens/Choice.tsx` | Three reversible actions as checkboxes with projected runway |
 | Recovery | `screens/Recovery.tsx` | Before/after, what changed, reassurance |
+| Reserve locked | `screens/ReserveLocked.tsx` | "47 days secured", Tax Guard active card; Download report is a sample (no file) |
+| Tax reserve | `screens/TaxReserve.tsx` | Dark header covers the status bar; €2,400 payment → €456 VAT (19%) + €504 income tax (21%) = €960 reserved, €1,440 available |
 | Income | `screens/Income.tsx` | Bars use fixed pixel heights from sample data |
 | Taxes | `screens/Taxes.tsx` | VAT / income tax split |
 | Safety | `screens/Safety.tsx` | Switch is local state only |
@@ -116,7 +121,7 @@ All in `src/data/alba.ts`. Key figures: runway 47 days healthy / 9 at risk, Safe
 
 - The phone frame and 9:41 status bar are drawn only from 640px up; on a real phone the app is full screen.
 - Home after applying actions shows the new runway instead of resetting to 47, so the story stays consistent.
-- The second Figma flow (Predictive runway / tax reserve, with the Anna example) is not part of this build.
+- The Tax Guard flow follows the Figma board "User flow - Alba - Predictive Runway". The Tax reserve screen is one scrollable page in code; Figma shows it twice (top and scrolled). "Ask Alba about this" opens the regular Advisor tab.
 
 ## 10. Next steps (not built)
 
